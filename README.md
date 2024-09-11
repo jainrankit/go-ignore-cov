@@ -19,7 +19,7 @@ What if you want to start using this on a existing codebase, how can you enforce
 ## Installation
 
 ```
-go install github.com/quantumcycle/go-ignore-cov@latest
+go install github.com/jainrankit/go-ignore-cov@latest
 ```
 
 ## Using `go-ignore-cov`

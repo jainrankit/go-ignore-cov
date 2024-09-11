@@ -1,9 +1,8 @@
 package hello_test
 
 import (
-	"testing"
-
 	"github.com/jainrankit/go-ignore-cov/example/hello"
+	"testing"
 )
 
 func TestSayHello(t *testing.T) {

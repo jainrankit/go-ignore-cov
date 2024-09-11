@@ -1,4 +1,4 @@
-module github.com/quantumcycle/go-ignore-cov
+module github.com/jainrankit/go-ignore-cov
 
 go 1.18
 
