@@ -3,10 +3,10 @@ package example
 import (
 	"fmt"
 
-	"github.com/quantumcycle/go-ignore-cov/example/hello"
+	"github.com/jainrankit/go-ignore-cov/example/hello"
 )
 
-//this package should have 100% code coverage if we remove the ignored statements
+// this package should have 100% code coverage if we remove the ignored statements
 func MaybeSayHello() {
 	// coverage:ignore
 	if err, ok := hello.SayHello(); err != nil && ok {

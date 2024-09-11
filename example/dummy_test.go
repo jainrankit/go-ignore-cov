@@ -3,7 +3,7 @@ package example_test
 import (
 	"testing"
 
-	"github.com/quantumcycle/go-ignore-cov/example"
+	"github.com/jainrankit/go-ignore-cov/example"
 )
 
 func TestSayHello(t *testing.T) {
