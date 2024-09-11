@@ -89,15 +89,19 @@ func getInstructionFromLine(line string) (string, bool) {
 }
 
 func readInstructionsFromSourceFile(path string) ([]Instruction, error) {
+	fmt.Printf("Reading ignore instructions from %s\n", path)
 	instructions := []Instruction{}
 	source, err := os.Open(path)
+
 	if err != nil {
 		return nil, err
 	}
 	defer source.Close()
 	scanner := bufio.NewScanner(source)
-	buf := make([]byte, 0, 64*1024)
-	scanner.Buffer(buf, 1024*1024)
+	info, _ := source.Stat()
+	maxSize := int(info.Size())
+	buf := make([]byte, 0, maxSize)
+	scanner.Buffer(buf, maxSize)
 	lineNumber := 1
 	pendingBlockInstruction := ""
 	for scanner.Scan() {
