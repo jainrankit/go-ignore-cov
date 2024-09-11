@@ -34,15 +34,15 @@ type Instruction interface {
 
 type IgnoreBlock struct {
 	Line int
-	Col int
+	Col  int
 }
 
 func (ig IgnoreBlock) UpdateProfile(profile *cover.Profile, verbose bool) {
 	newBlocks := []cover.ProfileBlock{}
-	igPos,_ := strconv.Atoi(fmt.Sprintf("%d%05d",ig.Line, ig.Col))
+	igPos, _ := strconv.Atoi(fmt.Sprintf("%d%05d", ig.Line, ig.Col))
 	for _, block := range profile.Blocks {
-		blockStart, _ := strconv.Atoi(fmt.Sprintf("%d%05d",block.StartLine, block.StartCol))
-		blockEnd, _ := strconv.Atoi(fmt.Sprintf("%d%05d",block.EndLine, block.EndCol))
+		blockStart, _ := strconv.Atoi(fmt.Sprintf("%d%05d", block.StartLine, block.StartCol))
+		blockEnd, _ := strconv.Atoi(fmt.Sprintf("%d%05d", block.EndLine, block.EndCol))
 		if igPos >= blockStart && igPos < blockEnd {
 			//whole block inside the ignore zone, just ignore it
 			if verbose {
@@ -96,6 +96,8 @@ func readInstructionsFromSourceFile(path string) ([]Instruction, error) {
 	}
 	defer source.Close()
 	scanner := bufio.NewScanner(source)
+	buf := make([]byte, 0, 64*1024)
+	scanner.Buffer(buf, 1024*1024)
 	lineNumber := 1
 	pendingBlockInstruction := ""
 	for scanner.Scan() {
@@ -113,7 +115,7 @@ func readInstructionsFromSourceFile(path string) ([]Instruction, error) {
 				colStart := len(lineTxt) - len(strings.TrimLeft(lineTxt, "\t ")) + 1
 				instructions = append(instructions, IgnoreBlock{
 					Line: lineNumber,
-					Col: colStart,
+					Col:  colStart,
 				})
 				pendingBlockInstruction = ""
 			}
