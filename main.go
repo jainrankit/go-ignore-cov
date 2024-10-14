@@ -29,7 +29,7 @@ type IgnoreCoverage struct {
 }
 
 type Instruction interface {
-	UpdateProfile(profile *cover.Profile, verbose bool)
+	UpdateProfile1(profile *cover.Profile, verbose bool)
 }
 
 type IgnoreBlock struct {
@@ -37,7 +37,7 @@ type IgnoreBlock struct {
 	Col  int
 }
 
-func (ig IgnoreBlock) UpdateProfile(profile *cover.Profile, verbose bool) {
+func (ig IgnoreBlock) UpdateProfile1(profile *cover.Profile, verbose bool) {
 	newBlocks := []cover.ProfileBlock{}
 	igPos, _ := strconv.Atoi(fmt.Sprintf("%d%05d", ig.Line, ig.Col))
 	for _, block := range profile.Blocks {
@@ -58,7 +58,7 @@ func (ig IgnoreBlock) UpdateProfile(profile *cover.Profile, verbose bool) {
 
 type IgnoreFile struct{}
 
-func (ig IgnoreFile) UpdateProfile(profile *cover.Profile, verbose bool) {
+func (ig IgnoreFile) UpdateProfile1(profile *cover.Profile, verbose bool) {
 	profile.Blocks = []cover.ProfileBlock{}
 	if verbose {
 		fmt.Printf("Removing all coverage blocks for %s\n", profile.FileName)
@@ -180,7 +180,7 @@ func findIgnoreCoveragesByFile(ignoreCoverages []IgnoreCoverage, file string) (*
 
 func updateProfileFromIgnoreCoverages(profile *cover.Profile, ignore *IgnoreCoverage, verbose bool) {
 	for _, instruction := range ignore.Instructions {
-		instruction.UpdateProfile(profile, verbose)
+		instruction.UpdateProfile1(profile, verbose)
 	}
 }
 
